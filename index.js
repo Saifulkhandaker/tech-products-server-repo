@@ -30,8 +30,23 @@ async function run() {
     await client.connect();
 
 
+    const userCollection = client.db('techDb').collection('users');
     const productCollection = client.db('techDb').collection('product');
     const reviewCollection = client.db("techDb").collection("reviews");
+
+
+    // users related api
+    app.post('/users', async(req, res) => {
+      const user =  req.body;
+      // insert email if user doesn't exists:
+      const query = {email: user.email};
+      const existingUser = await userCollection.findOne(query);
+      if(existingUser){
+        return res.send({message: 'user already exists', insertedId: null})
+      }
+      const result = await userCollection.insertOne(user);
+      res.send(result);
+    })
 
 
     // products api created
