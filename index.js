@@ -34,6 +34,7 @@ async function run() {
     const userCollection = client.db('techDb').collection('users');
     const productCollection = client.db('techDb').collection('product');
     const reviewCollection = client.db("techDb").collection("reviews");
+    const userProductCollection = client.db("techDb").collection("newProduct")
 
 
 
@@ -130,6 +131,14 @@ async function run() {
       const result = await userCollection.insertOne(user);
       res.send(result);
     })
+
+
+    // users products api
+    app.post('/newProduct', async(req, res) => {
+      const newProduct = req.body;
+      const result = await userProductCollection.insertOne(newProduct);
+      res.send(result);
+  })
 
 
     // products api created
