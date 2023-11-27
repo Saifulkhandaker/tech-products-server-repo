@@ -147,6 +147,30 @@ async function run() {
       res.send(result)
     })
 
+    // update product api
+    app.put('/product/:id', async(req, res) => {
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)};
+      const options = { upsert: true };
+      const updatedProduct = req.body;
+      const product = {
+          $set: {
+              name: updatedProduct.name,
+              img: updatedProduct.img,
+              details: updatedProduct.details, 
+              tags: updatedProduct.tags,
+              ownerName: updatedProduct.ownerName,
+              ownerImg: updatedProduct.ownerImg,
+              ownerEmail: updatedProduct.ownerEmail
+          }
+      }
+
+      const result = await productCollection.updateOne(filter, product, options)
+      res.send(result);
+  })
+
+
+
 
     // products api created
     app.get('/product', async(req, res) => {
