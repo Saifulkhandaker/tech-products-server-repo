@@ -34,6 +34,7 @@ async function run() {
     const userCollection = client.db('techDb').collection('users');
     const productCollection = client.db('techDb').collection('product');
     const reviewCollection = client.db("techDb").collection("reviews");
+    const couponCollection = client.db("techDb").collection("coupon");
 
 
 
@@ -192,6 +193,13 @@ async function run() {
       const result = await reviewCollection.find().toArray();
       res.send(result)
   })
+
+
+    // coupon api created
+    app.get('/coupon', async(req, res) => {
+      const result = await couponCollection.find().toArray();
+      res.send(result)
+    })
 
 
 
